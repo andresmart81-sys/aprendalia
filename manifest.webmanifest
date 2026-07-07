@@ -10,9 +10,40 @@
   "background_color": "#071e26",
   "theme_color": "#0f3d4c",
   "lang": "es",
+  "categories": ["education", "productivity"],
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/1-inicio.png",
+      "sizes": "824x1830",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Tu biblioteca de tests, lista para estudiar"
+    },
+    {
+      "src": "screenshots/2-estudio.png",
+      "sizes": "824x1830",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Modo Estudio: respuesta con explicación"
+    },
+    {
+      "src": "screenshots/3-juego.png",
+      "sizes": "824x1830",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Modo Juego: puntos, rachas y confeti"
+    },
+    {
+      "src": "screenshots/4-resultados.png",
+      "sizes": "824x1830",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Resultados con puntuación y récord"
+    }
   ]
 }

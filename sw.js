@@ -2,14 +2,14 @@
    Precachea el núcleo de la app y cachea las fuentes en tiempo real,
    para que la app funcione sin conexión tras la primera visita. */
 
-const CACHE = 'aprendalia-v1';
+const CACHE = 'aprendalia-v2';
 const NUCLEO = [
   './',
   './index.html',
   './manifest.webmanifest',
-  './icon-192.png',
-  './icon-512.png',
-  './icon-maskable-512.png'
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/icon-maskable-512.png'
 ];
 
 self.addEventListener('install', (e) => {
