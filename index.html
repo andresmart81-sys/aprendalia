@@ -42,6 +42,9 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
+  html, body {
+    overscroll-behavior-y: none;   /* desactiva el "arrastrar para recargar" en Android */
+  }
   body {
     font-family: 'Inter', system-ui, sans-serif;
     background: var(--fondo);
@@ -1675,7 +1678,7 @@
   </div>
 
   <div id="limitNote" class="limit-note" style="display:none">
-    Has alcanzado el máximo de 2 tests. Borra uno para añadir otro, o pásate a la versión completa.
+    Has alcanzado el máximo de tests gratuitos. Borra uno para añadir otro.
   </div>
 
   <div id="testList"></div>
@@ -2099,6 +2102,7 @@ function renderLibrary() {
   if (library.length >= MAX_TESTS) {
     addCard.classList.add('disabled');
     addCard.onclick = function() { showToast('Has alcanzado el máximo de ' + MAX_TESTS + ' tests. Borra uno para añadir otro.', 'err'); };
+    limitNote.textContent = 'Has alcanzado el máximo de ' + MAX_TESTS + ' tests gratuitos. Borra uno para añadir otro.';
     limitNote.style.display = 'block';
   } else {
     addCard.classList.remove('disabled');
@@ -2889,12 +2893,22 @@ function manejarAtras() {
   } else if (pantallaActual === 'screenResult') {
     // Desde resultados, atrás vuelve al inicio
     goHome();
+  } else if (pantallaActual !== 'screenHome') {
+    // En cualquier otra pantalla (guía, ajustes...), atrás vuelve al inicio
+    goHome();
   } else {
-    // En el inicio: re-anclamos y avisamos. Un segundo atrás seguido sí saldrá.
+    // En el inicio: primera pulsación avisa; una segunda en <2,2 s sale de verdad
+    if (Date.now() - ultimoAtrasInicio < 2200) {
+      // No re-anclamos: dejamos que el historial se agote y la app se cierre
+      history.back();
+      return;
+    }
+    ultimoAtrasInicio = Date.now();
     history.pushState({ screen: 'screenHome' }, '');
     showToast('Pulsa de nuevo atrás para salir de la app.', null);
   }
 }
+let ultimoAtrasInicio = 0;
 
 window.addEventListener('popstate', manejarAtras);
 
@@ -2917,6 +2931,8 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   });
 }
+// Entrada de guardia en el historial: el primer "atrás" nunca cierra la app
+try { history.pushState({ screen: 'guardia' }, ''); } catch (e) {}
 sembrarEjemploSiProcede();
 loadLibrary();
 renderLibrary();
