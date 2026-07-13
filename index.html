@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0f3d4c">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
 <title>Aprendalia · Tus tests</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
@@ -664,6 +661,12 @@
     cursor: pointer;
     display: none;
   }
+  #btnMarcarRepaso:disabled {
+    background: var(--fondo);
+    color: var(--texto-suave);
+    border: 1px solid var(--borde);
+    cursor: default;
+  }
   #btnSiguiente {
     flex: 1;
     background: var(--granate);
@@ -920,6 +923,11 @@
     color: var(--texto-suave);
     margin-top: 3px;
   }
+  .test-card-top-btns {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
   .test-card-del {
     background: var(--rojo-light);
     border: 1px solid var(--rojo-border);
@@ -934,6 +942,20 @@
     justify-content: center;
   }
   .test-card-del:active { transform: scale(0.92); }
+  .test-card-dl {
+    background: var(--granate-light);
+    border: 1px solid var(--borde);
+    color: var(--granate);
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .test-card-dl:active { transform: scale(0.92); }
   .test-card-stats {
     display: flex;
     gap: 8px;
@@ -1315,6 +1337,12 @@
   }
   .btn-home:active { background: var(--granate-light); }
 
+  #headerBtns {
+    display: flex;
+    align-items: center;
+    gap: 8px;               /* separación clara entre corazón y ajustes */
+    flex-shrink: 0;
+  }
   #btnAjustes {
     background: rgba(255,255,255,0.12);
     border: 1px solid rgba(255,255,255,0.25);
@@ -1326,6 +1354,17 @@
     transition: background 0.2s;
   }
   #btnAjustes:active { background: rgba(255,255,255,0.28); }
+  #btnDonar {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 1;
+    padding: 7px 9px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  #btnDonar:active { background: rgba(255,255,255,0.28); transform: scale(0.92); }
 
   /* ════ PANTALLA DE AJUSTES ════ */
   .ajustes-hero {
@@ -1661,7 +1700,10 @@
 <div id="appHeader">
   <div id="headerTitle">📚 Aprendalia</div>
   <button id="btnReiniciar" style="display:none" onclick="intentarVolverInicio()">⟵ Inicio</button>
-  <button id="btnAjustes" onclick="abrirAjustes()" aria-label="Ajustes">⚙️</button>
+  <div id="headerBtns">
+    <button id="btnDonar" onclick="abrirDonar()" aria-label="Apoya el proyecto">❤️</button>
+    <button id="btnAjustes" onclick="abrirAjustes()" aria-label="Ajustes">⚙️</button>
+  </div>
 </div>
 
 <!-- ══ PANTALLA 0: INICIO / BIBLIOTECA ══ -->
@@ -1674,11 +1716,11 @@
 
   <div class="lib-section-title">
     <span>Mis tests</span>
-    <span class="lib-count" id="libCount">0 / 3</span>
+    <span class="lib-count" id="libCount">0 / 5</span>
   </div>
 
   <div id="limitNote" class="limit-note" style="display:none">
-    Has alcanzado el máximo de tests gratuitos. Borra uno para añadir otro.
+    Has alcanzado el máximo de 2 tests. Borra uno para añadir otro, o pásate a la versión completa.
   </div>
 
   <div id="testList"></div>
@@ -1707,19 +1749,23 @@
 
   <div class="paso">
     <div class="paso-num">1</div>
-    <div class="paso-txt"><strong>Copia el prompt</strong><br>Pulsa el botón "Copiar prompt" de aquí abajo.</div>
+    <div class="paso-txt"><strong>Genera tus preguntas</strong><br>Sube tus apuntes a la IA (pueden ser apuntes ya hechos, resúmenes o un <strong>PDF</strong>) y pídele que te cree preguntas tipo test con este modelo: 4 respuestas con formato A, B, C, D, marcando la correcta con un asterisco (*) al final.</div>
   </div>
   <div class="paso">
     <div class="paso-num">2</div>
-    <div class="paso-txt"><strong>Pégalo en tu IA junto con tu temario</strong><br>Abre ChatGPT, Gemini o Claude, pega el prompt y añade tu material debajo. Ese material puede ser un tema que copies, tus apuntes, o incluso un <strong>PDF</strong>: súbelo o pégalo y la IA creará las preguntas y respuestas a partir de él.</div>
+    <div class="paso-txt"><strong>Copia el prompt</strong><br>Pulsa el botón "Copiar prompt" de aquí abajo. No hace falta que lo cambies.</div>
   </div>
   <div class="paso">
     <div class="paso-num">3</div>
-    <div class="paso-txt"><strong>Copia el resultado</strong><br>La IA te dará un bloque de texto que empieza por <code>{</code>. Para copiarlo entero de una vez, pulsa el icono de copiar de la IA: son <strong>dos cuadraditos superpuestos</strong> (⧉) que aparecen encima o debajo del bloque.</div>
+    <div class="paso-txt"><strong>Pégalo en la misma conversación</strong><br>Sin salir de esa conversación donde la IA generó las preguntas, pega el prompt copiado y envíalo. Como el prompt ya sabe que debe usar lo que acabas de generar, no hace falta que copies ni pegues las preguntas otra vez.</div>
   </div>
   <div class="paso">
     <div class="paso-num">4</div>
-    <div class="paso-txt"><strong>Pégalo aquí mismo</strong><br>Pulsa "Pegar mi test" abajo y pega ahí lo que copiaste. ¡Listo!</div>
+    <div class="paso-txt"><strong>Copia el resultado</strong><br>La IA te dará un bloque de texto que empieza por <code>{</code>. Para copiarlo entero de una vez, pulsa el icono de copiar de la IA: son <strong>dos cuadraditos superpuestos</strong> (⧉) que aparecen encima o debajo del bloque.</div>
+  </div>
+  <div class="paso">
+    <div class="paso-num">5</div>
+    <div class="paso-txt"><strong>Pégalo aquí y gestiona tus tests</strong><br>Pulsa "Pegar mi test" abajo y pega ahí lo que copiaste. Tu test aparecerá en la pantalla de inicio, guardado automáticamente en tu dispositivo. Desde ahí podrás jugarlo, guardarlo como archivo .json, o borrarlo cuando quieras.</div>
   </div>
 
   <div class="tip-box amber">
@@ -1924,10 +1970,14 @@
 // ════════════════════════════════════════════════
 
 // ── Configuración ──
-const MAX_TESTS = 3;                 // límite de tests guardados (versión gratuita)
+const MAX_TESTS = 5;                 // límite de tests (3 preinstalados + 2 libres para el usuario)
 const STORAGE_KEY = 'mis_tests_v1';   // clave de almacenamiento (neutra, no depende del nombre comercial)
-const SEED_KEY = 'ejemplo_sembrado_v1';  // marca de que el test de ejemplo ya se creó una vez
+const SEED_KEY = 'ejemplo_sembrado_v2';  // v2: ahora siembra los 3 tests (antes solo 1) — se cambia
+                                          // el nombre a propósito para forzar la siembra de nuevo
+                                          // en dispositivos que ya habían abierto la versión anterior.
 const EJEMPLO_JSON = `{"titulo": "Cultura general (ejemplo)", "preguntas": [{"topic": "Geografía", "question": "¿Cuál es el río más largo del mundo?", "answers": ["El Nilo", "El Amazonas", "El Misisipi", "El Yangtsé"], "correctIndex": 1, "explanation": "El Amazonas es considerado el más largo tras las mediciones más recientes, además de ser el más caudaloso del planeta."}, {"topic": "Historia", "question": "¿En qué año llegó el ser humano a la Luna por primera vez?", "answers": ["1965", "1969", "1972", "1958"], "correctIndex": 1, "explanation": "La misión Apolo 11 alunizó en julio de 1969, con Neil Armstrong como primer ser humano en pisar la superficie lunar."}, {"topic": "Ciencia", "question": "¿Cuál es el planeta más grande del sistema solar?", "answers": ["Saturno", "Neptuno", "Júpiter", "La Tierra"], "correctIndex": 2, "explanation": "Júpiter es el planeta de mayor tamaño y masa del sistema solar, un gigante gaseoso que supera a todos los demás juntos."}, {"topic": "Arte", "question": "¿Quién pintó la Mona Lisa?", "answers": ["Miguel Ángel", "Rafael", "Leonardo da Vinci", "Sandro Botticelli"], "correctIndex": 2, "explanation": "La obra fue pintada por Leonardo da Vinci a comienzos del siglo XVI y se conserva en el museo del Louvre."}, {"topic": "Ciencia", "question": "¿Cuántos huesos tiene aproximadamente el cuerpo humano adulto?", "answers": ["106", "206", "306", "406"], "correctIndex": 1, "explanation": "Un cuerpo adulto tiene 206 huesos; al nacer hay más, pero muchos se fusionan durante el crecimiento."}, {"topic": "Geografía", "question": "¿Cuál es la capital de Australia?", "answers": ["Sídney", "Melbourne", "Canberra", "Brisbane"], "correctIndex": 2, "explanation": "Aunque Sídney y Melbourne son más conocidas y pobladas, la capital es Canberra, elegida como solución de compromiso entre ambas."}, {"topic": "Literatura", "question": "¿Quién escribió 'Cien años de soledad'?", "answers": ["Mario Vargas Llosa", "Gabriel García Márquez", "Julio Cortázar", "Jorge Luis Borges"], "correctIndex": 1, "explanation": "La novela fue escrita por el colombiano Gabriel García Márquez y es una obra cumbre del realismo mágico."}, {"topic": "Ciencia", "question": "¿Cuál es el metal líquido a temperatura ambiente?", "answers": ["Plomo", "Mercurio", "Aluminio", "Estaño"], "correctIndex": 1, "explanation": "El mercurio es el único metal que se mantiene en estado líquido a temperatura ambiente."}, {"topic": "Historia", "question": "¿Qué civilización construyó Machu Picchu?", "answers": ["Los aztecas", "Los mayas", "Los incas", "Los olmecas"], "correctIndex": 2, "explanation": "Machu Picchu fue construida por la civilización inca en el siglo XV, en los Andes del actual Perú."}, {"topic": "Deporte", "question": "¿Cada cuántos años se celebran los Juegos Olímpicos de verano?", "answers": ["Cada 2 años", "Cada 3 años", "Cada 4 años", "Cada 5 años"], "correctIndex": 2, "explanation": "Los Juegos Olímpicos de verano se celebran cada cuatro años, un periodo conocido como olimpiada."}, {"topic": "Geografía", "question": "¿Cuál es el océano más grande del planeta?", "answers": ["Atlántico", "Índico", "Ártico", "Pacífico"], "correctIndex": 3, "explanation": "El océano Pacífico es el mayor y más profundo, y cubre aproximadamente un tercio de la superficie terrestre."}, {"topic": "Música", "question": "¿Cuántas cuerdas tiene una guitarra española estándar?", "answers": ["Cuatro", "Cinco", "Seis", "Siete"], "correctIndex": 2, "explanation": "La guitarra española clásica tiene seis cuerdas afinadas, tradicionalmente, en mi, la, re, sol, si y mi."}, {"topic": "Ciencia", "question": "¿Qué gas absorben las plantas del aire para la fotosíntesis?", "answers": ["Oxígeno", "Dióxido de carbono", "Nitrógeno", "Hidrógeno"], "correctIndex": 1, "explanation": "Las plantas captan dióxido de carbono y, con la luz solar, producen glucosa y liberan oxígeno."}, {"topic": "Historia", "question": "¿En qué país se originaron los Juegos Olímpicos antiguos?", "answers": ["Roma", "Grecia", "Egipto", "Persia"], "correctIndex": 1, "explanation": "Los Juegos Olímpicos antiguos nacieron en Grecia, en la ciudad de Olimpia, en honor al dios Zeus."}, {"topic": "Geografía", "question": "¿Cuál es el país más poblado del mundo?", "answers": ["China", "Estados Unidos", "India", "Indonesia"], "correctIndex": 2, "explanation": "India superó a China como país más poblado del mundo según las estimaciones demográficas más recientes."}, {"topic": "Arte", "question": "¿En qué ciudad se encuentra la Sagrada Familia?", "answers": ["Madrid", "Sevilla", "Valencia", "Barcelona"], "correctIndex": 3, "explanation": "La basílica de la Sagrada Familia, obra de Antoni Gaudí, se encuentra en Barcelona y sigue en construcción."}, {"topic": "Ciencia", "question": "¿Cuál es la velocidad aproximada de la luz en el vacío?", "answers": ["300.000 km/s", "30.000 km/s", "3.000.000 km/s", "3.000 km/s"], "correctIndex": 0, "explanation": "La luz viaja a unos 300.000 kilómetros por segundo en el vacío, el límite de velocidad del universo conocido."}, {"topic": "Literatura", "question": "¿Quién escribió 'Don Quijote de la Mancha'?", "answers": ["Lope de Vega", "Miguel de Cervantes", "Francisco de Quevedo", "Calderón de la Barca"], "correctIndex": 1, "explanation": "La obra fue escrita por Miguel de Cervantes y está considerada la primera novela moderna de la literatura."}, {"topic": "Historia", "question": "¿Qué muro cayó en 1989 marcando el fin de una era?", "answers": ["El muro de Adriano", "El muro de Berlín", "La Gran Muralla", "El muro de las Lamentaciones"], "correctIndex": 1, "explanation": "La caída del muro de Berlín en 1989 simbolizó el fin de la división de Alemania y el ocaso de la Guerra Fría."}, {"topic": "Ciencia", "question": "¿Cuál es el símbolo químico del oro?", "answers": ["Or", "Go", "Au", "Ag"], "correctIndex": 2, "explanation": "El símbolo del oro es Au, del latín 'aurum'. Ag corresponde a la plata."}, {"topic": "Geografía", "question": "¿En qué continente se encuentra el desierto del Sáhara?", "answers": ["Asia", "África", "América", "Oceanía"], "correctIndex": 1, "explanation": "El Sáhara, el mayor desierto cálido del mundo, se extiende por el norte de África."}, {"topic": "Deporte", "question": "¿Con cuántos jugadores por equipo se juega un partido de fútbol?", "answers": ["Nueve", "Diez", "Once", "Doce"], "correctIndex": 2, "explanation": "Cada equipo alinea once jugadores en el campo, incluido el portero."}, {"topic": "Música", "question": "¿Quién compuso la novena sinfonía, con el famoso 'Himno a la alegría'?", "answers": ["Mozart", "Beethoven", "Bach", "Chopin"], "correctIndex": 1, "explanation": "La Novena Sinfonía fue compuesta por Ludwig van Beethoven, ya afectado por la sordera, e incluye el célebre 'Himno a la alegría'."}, {"topic": "Ciencia", "question": "¿Qué órgano del cuerpo humano bombea la sangre?", "answers": ["El hígado", "Los pulmones", "El corazón", "Los riñones"], "correctIndex": 2, "explanation": "El corazón es el órgano muscular que bombea la sangre a todo el cuerpo a través del sistema circulatorio."}, {"topic": "Historia", "question": "¿Quién fue el primer presidente de los Estados Unidos?", "answers": ["Thomas Jefferson", "Abraham Lincoln", "George Washington", "Benjamin Franklin"], "correctIndex": 2, "explanation": "George Washington fue el primer presidente de los Estados Unidos, en el cargo desde 1789."}]}`;
+const GEOGRAFIA_JSON = `{"titulo": "Test de Geografía", "preguntas": [{"topic": "Monumentos", "question": "¿En qué país se encuentra la Torre Eiffel?", "answers": ["Italia", "España", "Francia", "Bélgica"], "correctIndex": 2, "explanation": "La Torre Eiffel se ubica en París, capital de Francia, y es uno de los monumentos más visitados del mundo."}, {"topic": "Ciudades", "question": "¿Cuál es la ciudad más poblada de Japón y su capital?", "answers": ["Osaka", "Kioto", "Tokio", "Yokohama"], "correctIndex": 2, "explanation": "Tokio es la capital de Japón y una de las áreas metropolitanas más pobladas del planeta."}, {"topic": "Monumentos", "question": "¿En qué país se ubica Machu Picchu?", "answers": ["Bolivia", "Perú", "Ecuador", "Chile"], "correctIndex": 1, "explanation": "Machu Picchu es una ciudadela inca situada en los Andes peruanos y una de las maravillas del mundo moderno."}, {"topic": "Naturaleza", "question": "¿Qué desierto es el más grande del mundo?", "answers": ["Desierto del Sahara", "Desierto de Gobi", "Desierto de Atacama", "Desierto de Kalahari"], "correctIndex": 0, "explanation": "El Sahara, en el norte de África, es el desierto cálido más extenso del planeta."}, {"topic": "Monumentos", "question": "¿En qué ciudad se encuentra el Coliseo Romano?", "answers": ["Milán", "Nápoles", "Roma", "Florencia"], "correctIndex": 2, "explanation": "El Coliseo se encuentra en el centro de Roma y fue el anfiteatro más grande construido por el Imperio Romano."}, {"topic": "Naturaleza", "question": "¿Cuál es el río más largo del mundo?", "answers": ["Río Amazonas", "Río Nilo", "Río Yangtsé", "Río Misisipi"], "correctIndex": 0, "explanation": "Según estudios recientes, el Amazonas supera al Nilo en longitud, además de ser el de mayor caudal del mundo."}, {"topic": "Naturaleza", "question": "¿En qué país se encuentra la Gran Barrera de Coral?", "answers": ["Nueva Zelanda", "Filipinas", "Australia", "Indonesia"], "correctIndex": 2, "explanation": "La Gran Barrera de Coral se extiende frente a la costa de Queensland, en Australia, y es el mayor sistema de arrecifes del mundo."}, {"topic": "Capitales", "question": "¿Cuál es la capital de Canadá?", "answers": ["Toronto", "Vancouver", "Ottawa", "Montreal"], "correctIndex": 2, "explanation": "Aunque Toronto es la ciudad más poblada, Ottawa es la capital oficial de Canadá."}, {"topic": "Monumentos", "question": "¿En qué país se localiza la ciudad de Petra, tallada en roca?", "answers": ["Egipto", "Jordania", "Líbano", "Israel"], "correctIndex": 1, "explanation": "Petra es una antigua ciudad nabatea excavada en la roca, situada en el sur de Jordania."}, {"topic": "Destinos de playa", "question": "¿Qué archipiélago español es famoso por sus playas volcánicas y clima cálido todo el año?", "answers": ["Islas Baleares", "Islas Canarias", "Islas Columbretes", "Islas Cíes"], "correctIndex": 1, "explanation": "Las Islas Canarias, de origen volcánico, disfrutan de un clima templado durante todo el año, lo que las convierte en un destino turístico muy popular."}, {"topic": "Datos generales", "question": "¿Cuál es el país más grande del mundo por superficie?", "answers": ["Canadá", "China", "Estados Unidos", "Rusia"], "correctIndex": 3, "explanation": "Rusia abarca más de 17 millones de km², extendiéndose a través de Europa y Asia, lo que la convierte en el país más extenso."}, {"topic": "Monumentos", "question": "¿En qué ciudad se encuentra la famosa Sagrada Familia?", "answers": ["Madrid", "Barcelona", "Valencia", "Sevilla"], "correctIndex": 1, "explanation": "La Sagrada Familia, obra inacabada de Antoni Gaudí, se ubica en Barcelona y es uno de los símbolos más visitados de España."}, {"topic": "Naturaleza", "question": "¿Qué país alberga las cataratas del Iguazú junto con Argentina?", "answers": ["Paraguay", "Uruguay", "Brasil", "Bolivia"], "correctIndex": 2, "explanation": "Las cataratas del Iguazú se encuentran en la frontera entre Argentina y Brasil, siendo uno de los saltos de agua más espectaculares del mundo."}, {"topic": "Naturaleza", "question": "¿Cuál es la montaña más alta del mundo?", "answers": ["K2", "Monte Kilimanjaro", "Monte Everest", "Aconcagua"], "correctIndex": 2, "explanation": "El Monte Everest, en la cordillera del Himalaya, alcanza los 8.849 metros y es la montaña más alta sobre el nivel del mar."}, {"topic": "Destinos de playa", "question": "¿En qué país se encuentra la ciudad de Santorini?", "answers": ["Turquía", "Grecia", "Chipre", "Italia"], "correctIndex": 1, "explanation": "Santorini es una isla griega del mar Egeo, famosa por sus casas blancas y azules y sus atardeceres."}, {"topic": "Capitales", "question": "¿Cuál es la capital de Australia? (No es Sídney)", "answers": ["Melbourne", "Camberra", "Perth", "Brisbane"], "correctIndex": 1, "explanation": "Aunque Sídney es la ciudad más conocida, Camberra fue diseñada específicamente para ser la capital de Australia."}, {"topic": "Monumentos", "question": "¿En qué país se ubica el Taj Mahal?", "answers": ["Pakistán", "Nepal", "India", "Bangladés"], "correctIndex": 2, "explanation": "El Taj Mahal se encuentra en Agra, India, y fue construido como mausoleo por el emperador mogol Shah Jahan."}, {"topic": "Datos generales", "question": "¿Qué país es conocido como \\"la tierra del sol naciente\\"?", "answers": ["China", "Corea del Sur", "Japón", "Tailandia"], "correctIndex": 2, "explanation": "Japón recibe este apodo porque su nombre en japonés significa literalmente \\"origen del sol\\"."}, {"topic": "Naturaleza", "question": "¿Cuál es el lago más grande del mundo por superficie?", "answers": ["Lago Baikal", "Mar Caspio", "Lago Superior", "Lago Victoria"], "correctIndex": 1, "explanation": "El Mar Caspio, aunque llamado \\"mar\\", es en realidad el lago más extenso del mundo, ubicado entre Europa y Asia."}, {"topic": "Ciudades", "question": "¿En qué país se encuentra la famosa ciudad de Marrakech?", "answers": ["Túnez", "Argelia", "Marruecos", "Egipto"], "correctIndex": 2, "explanation": "Marrakech es una de las ciudades imperiales de Marruecos, conocida por su medina, zocos y palacios históricos."}, {"topic": "Ciudades", "question": "¿Qué ciudad europea es conocida como \\"la ciudad de los canales\\"?", "answers": ["Brujas", "Ámsterdam", "Venecia", "Estocolmo"], "correctIndex": 1, "explanation": "Ámsterdam es famosa por su extensa red de canales que atraviesan la ciudad, un rasgo característico de su paisaje urbano."}, {"topic": "Naturaleza", "question": "¿En qué continente se encuentra el desierto del Atacama?", "answers": ["África", "Asia", "América del Sur", "Oceanía"], "correctIndex": 2, "explanation": "El desierto de Atacama se sitúa en Chile, en América del Sur, y es conocido por ser uno de los lugares más áridos del planeta."}, {"topic": "Ecoturismo", "question": "¿Qué país centroamericano es famoso por sus volcanes y su biodiversidad, siendo un destino ecoturístico top?", "answers": ["Panamá", "Costa Rica", "Nicaragua", "Honduras"], "correctIndex": 1, "explanation": "Costa Rica es reconocida mundialmente por su compromiso con la conservación ambiental y su gran diversidad de fauna y flora."}, {"topic": "Capitales", "question": "¿Cuál es la capital de Islandia?", "answers": ["Reikiavik", "Oslo", "Helsinki", "Copenhague"], "correctIndex": 0, "explanation": "Reikiavik es la capital de Islandia y la ciudad capital más septentrional del mundo."}, {"topic": "Monumentos", "question": "¿En qué país se encuentra la Gran Muralla?", "answers": ["Mongolia", "Corea del Norte", "China", "Vietnam"], "correctIndex": 2, "explanation": "La Gran Muralla se extiende a lo largo de miles de kilómetros en el norte de China, construida originalmente como sistema defensivo."}]}`;
+const CULTURAPOP_JSON = `{"titulo": "Test de Cultura Pop de los 90", "preguntas": [{"topic": "Música", "question": "¿Qué banda lanzó el álbum \\"Nevermind\\" en 1991?", "answers": ["Pearl Jam", "Nirvana", "Soundgarden", "Alice in Chains"], "correctIndex": 1, "explanation": "Nevermind fue el segundo álbum de Nirvana y catapultó el grunge a la fama mundial gracias a temas como \\"Smells Like Teen Spirit\\"."}, {"topic": "Televisión", "question": "¿Cómo se llamaba el protagonista de la serie \\"El Príncipe de Bel-Air\\"?", "answers": ["Carlton Banks", "Will Smith", "Philip Banks", "Jazz"], "correctIndex": 1, "explanation": "La serie giraba en torno a Will Smith, un joven de Filadelfia que se muda a vivir con sus tíos ricos en Bel-Air."}, {"topic": "Videojuegos", "question": "¿Qué videojuego popularizó a un fontanero italiano en su versión 3D de 1996?", "answers": ["Sonic Adventure", "Crash Bandicoot", "Super Mario 64", "Banjo-Kazooie"], "correctIndex": 2, "explanation": "Super Mario 64 llevó al personaje de Nintendo a un mundo tridimensional por primera vez, marcando un hito en los videojuegos de plataformas."}, {"topic": "Cine", "question": "¿Qué película de 1997 batió récords de taquilla con Leonardo DiCaprio y Kate Winslet?", "answers": ["Titanic", "Romeo + Julieta", "El indomable Will Hunting", "Forrest Gump"], "correctIndex": 0, "explanation": "Titanic se convirtió en un fenómeno mundial y durante años fue la película con mayor recaudación de la historia."}, {"topic": "Música", "question": "¿Cuál era el nombre del grupo pop femenino formado en 1994 conocido como \\"Girl Power\\"?", "answers": ["Destiny's Child", "TLC", "Spice Girls", "All Saints"], "correctIndex": 2, "explanation": "Las Spice Girls popularizaron el lema \\"Girl Power\\" y se convirtieron en uno de los grupos más icónicos de la década."}, {"topic": "Videojuegos", "question": "¿Qué consola lanzó Sony en 1994/1995?", "answers": ["Nintendo 64", "Sega Saturn", "PlayStation", "Game Gear"], "correctIndex": 2, "explanation": "La PlayStation fue la primera incursión de Sony en el mercado de consolas y revolucionó la industria con juegos en CD."}, {"topic": "Cine", "question": "¿Quién interpretó a Neo en \\"The Matrix\\" (1999)?", "answers": ["Brad Pitt", "Keanu Reeves", "Tom Cruise", "Will Smith"], "correctIndex": 1, "explanation": "Keanu Reeves dio vida a Neo, el protagonista que descubre que vive dentro de una simulación controlada por máquinas."}, {"topic": "Videojuegos", "question": "¿Cómo se llamaba la mascota azul de Sega?", "answers": ["Sonic the Hedgehog", "Tails", "Knuckles", "Shadow"], "correctIndex": 0, "explanation": "Sonic the Hedgehog fue creado por Sega como respuesta directa a Mario y se convirtió en su mayor símbolo durante los 90."}, {"topic": "Televisión", "question": "¿Qué serie animada presentaba a una familia amarilla en Springfield?", "answers": ["Padre de familia", "South Park", "Los Simpson", "King of the Hill"], "correctIndex": 2, "explanation": "Los Simpson debutó en 1989 y a lo largo de los 90 se consolidó como una de las series animadas más influyentes de la cultura pop."}, {"topic": "Música", "question": "¿Qué cantante lanzó el álbum \\"...Baby One More Time\\" en 1998?", "answers": ["Christina Aguilera", "Britney Spears", "Mandy Moore", "Jessica Simpson"], "correctIndex": 1, "explanation": "Este álbum debut catapultó a Britney Spears al estrellato mundial y marcó el inicio del pop adolescente de finales de los 90."}, {"topic": "Juguetes y coleccionables", "question": "¿Qué juguete coleccionable con criaturas de bolsillo debutó en 1996?", "answers": ["Digimon", "Pokémon", "Beyblade", "Tamagotchi"], "correctIndex": 1, "explanation": "Pokémon nació en Japón en 1996 como videojuego y rápidamente se expandió a cartas, anime y juguetes en todo el mundo."}, {"topic": "Música", "question": "¿Cuál era el nombre del grupo de chicos formado en Orlando en 1993?", "answers": ["NSYNC", "Backstreet Boys", "98 Degrees", "Boyz II Men"], "correctIndex": 1, "explanation": "Backstreet Boys se formó en Orlando, Florida, y se convirtió en uno de los boy bands más exitosos de la historia."}, {"topic": "Cine", "question": "¿Qué película de Disney de 1994 trata sobre un león que debe recuperar su trono?", "answers": ["Pocahontas", "Aladdín", "El Rey León", "Hércules"], "correctIndex": 2, "explanation": "El Rey León narra la historia de Simba, quien debe asumir su lugar como rey tras la muerte de su padre Mufasa."}, {"topic": "Televisión", "question": "¿Qué serie de televisión seguía las vidas de seis amigos en Nueva York?", "answers": ["Seinfeld", "Friends", "Frasier", "Will & Grace"], "correctIndex": 1, "explanation": "Friends, estrenada en 1994, siguió las vivencias de Ross, Rachel, Monica, Chandler, Joey y Phoebe en Manhattan."}, {"topic": "Juguetes y coleccionables", "question": "¿Qué juguete electrónico virtual necesitaba ser \\"alimentado\\" y \\"cuidado\\" en los 90?", "answers": ["Furby", "Tamagotchi", "Giga Pet", "Nano Baby"], "correctIndex": 1, "explanation": "El Tamagotchi, lanzado en 1996, era una mascota digital que requería atención constante para sobrevivir, generando gran furor."}, {"topic": "Música", "question": "¿Qué grupo interpretó \\"Smells Like Teen Spirit\\"?", "answers": ["Nirvana", "Foo Fighters", "Green Day", "Bush"], "correctIndex": 0, "explanation": "Esta canción de Nirvana se convirtió en el himno generacional del grunge y de la juventud de principios de los 90."}, {"topic": "Cine", "question": "¿Qué película de 1994 con Tom Hanks narra la vida de un hombre con un coeficiente intelectual bajo pero un gran corazón?", "answers": ["Náufrago", "Forrest Gump", "Filadelfia", "Big"], "correctIndex": 1, "explanation": "Forrest Gump sigue la extraordinaria vida de su protagonista a través de decenas de años de historia estadounidense."}, {"topic": "Cine", "question": "¿Dónde transcurre principalmente la trama de la película \\"Clueless\\" (1995)?", "answers": ["En un centro comercial ficticio", "En Beverly Hills", "En un instituto de Nueva York", "En un campus universitario"], "correctIndex": 1, "explanation": "Clueless retrata la vida de una adolescente adinerada en Beverly Hills, convirtiéndose en un ícono de la moda y comedia adolescente de los 90."}, {"topic": "Música", "question": "¿Qué banda británica protagonizó la rivalidad musical conocida como \\"Britpop\\" contra Oasis?", "answers": ["Radiohead", "Blur", "Suede", "Pulp"], "correctIndex": 1, "explanation": "La rivalidad entre Blur y Oasis, apodada \\"Battle of Britpop\\", dominó la prensa musical británica de mediados de los 90."}, {"topic": "Televisión", "question": "¿Qué serie de dibujos animados presentaba a un grupo de niñas superheroínas creadas en un laboratorio?", "answers": ["Sailor Moon", "Las Chicas Superpoderosas", "W.I.T.C.H.", "Totally Spies"], "correctIndex": 1, "explanation": "Las Chicas Superpoderosas nacieron de un experimento accidental del Profesor Utonium y se convirtieron en un clásico de finales de los 90."}, {"topic": "Cine", "question": "¿Qué actor interpretó a Jack Dawson en \\"Titanic\\"?", "answers": ["Matt Damon", "Leonardo DiCaprio", "Brad Pitt", "Ben Affleck"], "correctIndex": 1, "explanation": "Leonardo DiCaprio dio vida a Jack, el joven artista que se enamora de Rose durante el viaje del Titanic."}, {"topic": "Videojuegos", "question": "¿Qué videojuego de lucha presentó por primera vez a personajes como Ryu y Ken?", "answers": ["Mortal Kombat", "Tekken", "Street Fighter II", "King of Fighters"], "correctIndex": 2, "explanation": "Street Fighter II popularizó el género de lucha en los 90 y consolidó a Ryu y Ken como iconos de los videojuegos."}, {"topic": "Música", "question": "¿Cuál fue el primer sencillo de Michael Jackson del álbum \\"Dangerous\\" (1991)?", "answers": ["Black or White", "Remember the Time", "Heal the World", "Jam"], "correctIndex": 0, "explanation": "\\"Black or White\\" fue el primer sencillo del álbum y alcanzó rápidamente el número uno en varios países gracias a su innovador videoclip."}, {"topic": "Televisión", "question": "¿Qué serie protagonizada por David Duchovny y Gillian Anderson investigaba fenómenos paranormales?", "answers": ["Sobrenatural", "Expediente X", "Twin Peaks", "Kolchak"], "correctIndex": 1, "explanation": "Expediente X siguió a los agentes del FBI Mulder y Scully en su investigación de casos relacionados con lo paranormal y conspiraciones."}, {"topic": "Música", "question": "¿Qué artista lanzó el álbum \\"The Chronic\\" en 1992?", "answers": ["Snoop Dogg", "Dr. Dre", "Ice Cube", "N.W.A"], "correctIndex": 1, "explanation": "The Chronic fue el álbum debut en solitario de Dr. Dre y es considerado uno de los discos más influyentes del hip hop de los 90."}]}`;
 
 
 // ── Estado en memoria ──
@@ -1964,26 +2014,35 @@ function saveLibrary() {
 }
 function getTest(id) { return library.find(t => t.id === id); }
 
-// Sembrar el test de ejemplo la PRIMERA vez que se abre la app.
-// Si el usuario lo borra, no vuelve (la marca SEED_KEY permanece).
+// Sembrar los tests preinstalados la PRIMERA vez que se abre la app.
+// Si el usuario los borra, no vuelven (la marca SEED_KEY permanece).
 function sembrarEjemploSiProcede() {
   let yaSembrado;
   try { yaSembrado = localStorage.getItem(SEED_KEY); } catch (e) { yaSembrado = '1'; }
   if (yaSembrado) return;               // ya se sembró alguna vez → no repetir
   loadLibrary();
-  try {
-    const data = JSON.parse(EJEMPLO_JSON);
-    const nuevo = {
-      id: genId(),
-      titulo: data.titulo,
-      preguntas: data.preguntas.map(normalizarPregunta),
-      errores: [],
-      creado: Date.now(),
-      ejemplo: true                     // marca informativa
-    };
-    library.unshift(nuevo);             // lo ponemos el primero
-    saveLibrary();
-  } catch (e) { /* si algo falla, simplemente no se siembra */ }
+  // Orden de aparición: Cultura general primero, luego Geografía y Cultura pop.
+  const preinstalados = [EJEMPLO_JSON, GEOGRAFIA_JSON, CULTURAPOP_JSON];
+  // Insertamos en orden inverso porque cada unshift lo pone el primero.
+  for (let i = preinstalados.length - 1; i >= 0; i--) {
+    try {
+      const data = JSON.parse(preinstalados[i]);
+      // Evita duplicados si el usuario ya tenía un test con el mismo título
+      // (p. ej. porque abrió una versión anterior de la app).
+      const yaExiste = library.some(t => t.titulo === data.titulo);
+      if (yaExiste) continue;
+      const nuevo = {
+        id: genId(),
+        titulo: data.titulo,
+        preguntas: data.preguntas.map(normalizarPregunta),
+        errores: [],
+        creado: Date.now(),
+        ejemplo: true                     // marca informativa (test de fábrica)
+      };
+      library.unshift(nuevo);
+    } catch (e) { /* si uno falla, seguimos con los demás */ }
+  }
+  saveLibrary();
   try { localStorage.setItem(SEED_KEY, '1'); } catch (e) {}
 }
 
@@ -2036,7 +2095,7 @@ function showScreen(id) {
   // En el inicio → icono de ajustes visible, "Inicio" oculto.
   // En cualquier otra → "Inicio" visible, ajustes oculto.
   const enInicio = (id === 'screenHome');
-  document.getElementById('btnAjustes').style.display = enInicio ? 'block' : 'none';
+  document.getElementById('headerBtns').style.display = enInicio ? 'flex' : 'none';
   document.getElementById('btnReiniciar').style.display = enInicio ? 'none' : 'block';
   // Registrar un estado en el historial para poder interceptar el botón atrás
   try { history.pushState({ screen: id }, ''); } catch (e) {}
@@ -2050,6 +2109,16 @@ function goHome() {
 }
 function abrirAjustes() {
   showScreen('screenAjustes');
+}
+
+// ── Apoya el proyecto ──
+const URL_DONAR = null;  // ← cuando lo tengas, pon aquí la URL entre comillas
+function abrirDonar() {
+  if (URL_DONAR) {
+    window.open(URL_DONAR, '_blank', 'noopener');
+    return;
+  }
+  showToast('¡Gracias por el gesto! Muy pronto podrás apoyar el proyecto aquí. 💛', null);
 }
 function intentarVolverInicio() {
   if (pantallaActual === 'screenQuiz') {
@@ -2085,7 +2154,10 @@ function renderLibrary() {
       '<div class="test-card-top">' +
         '<div><div class="test-card-title">' + escapeHtml(test.titulo) + '</div>' +
         '<div class="test-card-meta">' + test.preguntas.length + ' preguntas</div></div>' +
-        '<button class="test-card-del" onclick="pedirBorrarTest(\'' + test.id + '\')">🗑️</button>' +
+        '<div class="test-card-top-btns">' +
+          '<button class="test-card-dl" onclick="descargarTestJSON(\'' + test.id + '\')" aria-label="Guardar copia .json" title="Guardar copia .json">⬇️</button>' +
+          '<button class="test-card-del" onclick="pedirBorrarTest(\'' + test.id + '\')" aria-label="Eliminar">🗑️</button>' +
+        '</div>' +
       '</div>' +
       '<div class="test-card-stats">' +
         '<div class="tc-stat"><div class="tc-stat-num">' + test.preguntas.length + '</div><div class="tc-stat-label">Preguntas</div></div>' +
@@ -2102,7 +2174,6 @@ function renderLibrary() {
   if (library.length >= MAX_TESTS) {
     addCard.classList.add('disabled');
     addCard.onclick = function() { showToast('Has alcanzado el máximo de ' + MAX_TESTS + ' tests. Borra uno para añadir otro.', 'err'); };
-    limitNote.textContent = 'Has alcanzado el máximo de ' + MAX_TESTS + ' tests gratuitos. Borra uno para añadir otro.';
     limitNote.style.display = 'block';
   } else {
     addCard.classList.remove('disabled');
@@ -2114,7 +2185,7 @@ function renderLibrary() {
 // ════════════════════════════════════════════════
 //  CREAR TEST (pantalla de instrucciones interna)
 // ════════════════════════════════════════════════
-const PROMPT_IA = `Convierte en un test tipo test, en formato JSON, el contenido que te doy (el documento que he adjuntado, o el texto de abajo).
+const PROMPT_IA = `Convierte en examen tipo test, en formato JSON, el contenido que te doy (el documento que he adjuntado, el texto de abajo, o el contenido que generaste).
 
 Devuélveme SOLO un objeto JSON válido, sin ningún texto antes ni después, sin explicaciones y sin bloques de código. Empieza directamente por { y termina por }.
 
@@ -2137,8 +2208,9 @@ Reglas:
 - Cada pregunta tiene EXACTAMENTE 4 opciones.
 - "correctIndex" va de 0 a 3 (0 = primera opción, 3 = cuarta).
 - En "explanation" no menciones las opciones por su letra; explica por el contenido.
-- Genera unas 25 preguntas.
+- Genera todas las preguntas Adjuntas.
 - No escribas nada fuera del JSON.
+- Genera un bloque independiente para copiar completo de forma fácil.
 
 Temario (si no has adjuntado un documento):
 
@@ -2318,6 +2390,46 @@ function normalizarPregunta(p) {
 // ════════════════════════════════════════════════
 //  BORRADO DE TEST (con modal)
 // ════════════════════════════════════════════════
+// Descarga una copia del test como archivo .json en el dispositivo
+// (respaldo, o para compartirlo más adelante con otra persona).
+function descargarTestJSON(id) {
+  const test = getTest(id);
+  if (!test) { showToast('Test no encontrado.', 'err'); return; }
+
+  const exportable = {
+    titulo: test.titulo,
+    preguntas: test.preguntas.map(p => ({
+      topic: p.topic || '',
+      question: p.question,
+      answers: p.answers,
+      correctIndex: p.correctIndex,
+      explanation: p.explanation || ''
+    }))
+  };
+
+  const contenido = JSON.stringify(exportable, null, 2);
+  const nombreArchivo = (test.titulo || 'test')
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '') || 'test';
+
+  try {
+    const blob = new Blob([contenido], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = nombreArchivo + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+    showToast('Guardado como «' + nombreArchivo + '.json» en Descargas.', null);
+  } catch (e) {
+    showToast('No se pudo guardar el archivo en este dispositivo.', 'err');
+  }
+}
+
 function pedirBorrarTest(id) {
   const test = getTest(id);
   if (!test) return;
@@ -2726,6 +2838,11 @@ function selectAnswer(pos, origRespIdx) {
     banner.className = 'ok';
     document.getElementById('feedbackIcon').textContent = '✓';
     document.getElementById('feedbackText').textContent = '¡Correcto!';
+    if (pistaUsada) {
+      // Acertó, pero con ayuda de la pista: se guarda igualmente para repaso,
+      // porque necesitar la pista es señal de que aún no domina la pregunta.
+      registrarError(item.origIdx);
+    }
   } else {
     incorrect++;
     banner.className = 'ko';
@@ -2744,11 +2861,17 @@ function selectAnswer(pos, origRespIdx) {
   document.getElementById('btnPista').style.display = 'none';
   document.getElementById('navBtns').style.display = 'flex';
   const btnMarcar = document.getElementById('btnMarcarRepaso');
-  // Permitir guardar manualmente solo si acertó (si falló, ya se guarda solo)
-  if (esCorrecta) {
+  // Botón manual de guardar: solo tiene sentido si acertó SIN pista
+  // (si falló, o si acertó con pista, ya se ha guardado automáticamente).
+  if (esCorrecta && !pistaUsada) {
     btnMarcar.style.display = 'block';
     btnMarcar.textContent = '🔖 Guardar para repasar';
     btnMarcar.disabled = false;
+  } else if (esCorrecta && pistaUsada) {
+    // Ya guardada automáticamente: lo mostramos como confirmación, sin acción.
+    btnMarcar.style.display = 'block';
+    btnMarcar.textContent = '✓ Guardada para repasar (usaste pista)';
+    btnMarcar.disabled = true;
   } else {
     btnMarcar.style.display = 'none';
   }
@@ -2897,18 +3020,14 @@ function manejarAtras() {
     // En cualquier otra pantalla (guía, ajustes...), atrás vuelve al inicio
     goHome();
   } else {
-    // En el inicio: primera pulsación avisa; una segunda en <2,2 s sale de verdad
-    if (Date.now() - ultimoAtrasInicio < 2200) {
-      // No re-anclamos: dejamos que el historial se agote y la app se cierre
-      history.back();
-      return;
-    }
-    ultimoAtrasInicio = Date.now();
-    history.pushState({ screen: 'screenHome' }, '');
-    showToast('Pulsa de nuevo atrás para salir de la app.', null);
+    // En el inicio: preguntar con un modal si quiere cerrar la aplicación.
+    if (salidaConfirmada) return;            // ya confirmó: dejar salir sin re-anclar
+    history.pushState({ screen: 'screenHome' }, '');   // re-anclar mientras decide
+    pedirCerrarApp();
   }
 }
-let ultimoAtrasInicio = 0;
+let ultimoAtrasInicio = 0;      // (ya no se usa para salir; se conserva por compatibilidad)
+let salidaConfirmada = false;   // true cuando el usuario confirma el cierre en el modal
 
 window.addEventListener('popstate', manejarAtras);
 
@@ -2922,15 +3041,19 @@ function pedirSalirQuiz() {
   document.getElementById('modalOverlay').classList.add('show');
 }
 
+function pedirCerrarApp() {
+  pendingAction = { tipo: 'cerrarApp' };
+  document.getElementById('modalIcon').textContent = '👋';
+  document.getElementById('modalTitle').textContent = '¿Cerrar la aplicación?';
+  document.getElementById('modalDesc').innerHTML =
+    'Tus tests y tu progreso de repaso quedan guardados. ¡Hasta pronto!';
+  document.getElementById('modalConfirm').textContent = 'Cerrar la aplicación';
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
 // ════════════════════════════════════════════════
 //  ARRANQUE
 // ════════════════════════════════════════════════
-// Registrar el service worker (modo offline de la PWA)
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
-  });
-}
 // Entrada de guardia en el historial: el primer "atrás" nunca cierra la app
 try { history.pushState({ screen: 'guardia' }, ''); } catch (e) {}
 sembrarEjemploSiProcede();
