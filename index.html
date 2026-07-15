@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#0f3d4c">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <title>Aprendalia · Tus tests</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
@@ -1365,6 +1368,17 @@
     transition: background 0.2s, transform 0.15s;
   }
   #btnDonar:active { background: rgba(255,255,255,0.28); transform: scale(0.92); }
+  #btnPC {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 10px;
+    font-size: 16px;
+    line-height: 1;
+    padding: 7px 9px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  #btnPC:active { background: rgba(255,255,255,0.28); transform: scale(0.92); }
 
   /* ════ PANTALLA DE AJUSTES ════ */
   .ajustes-hero {
@@ -1417,6 +1431,113 @@
     color: var(--texto-suave);
     margin: 18px 0;
   }
+
+  /* ════ PANTALLA: APRENDALIA EN TU ORDENADOR ════ */
+  .pc-hero {
+    background: linear-gradient(135deg, var(--granate-dark) 0%, var(--granate) 100%);
+    color: white;
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    text-align: center;
+    margin-bottom: 18px;
+  }
+  .pc-hero-icon { font-size: 40px; margin-bottom: 6px; }
+  .pc-hero h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .pc-hero p {
+    font-size: 13px;
+    opacity: 0.9;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.4;
+  }
+  .pc-card {
+    background: var(--carta);
+    border: 1px solid var(--borde);
+    border-radius: var(--radius-sm);
+    padding: 18px;
+    margin-bottom: 16px;
+  }
+  .pc-card-txt {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--texto);
+    margin-bottom: 12px;
+    line-height: 1.45;
+  }
+  .pc-link {
+    background: var(--granate-light);
+    border: 1px dashed #9fd4cb;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-family: ui-monospace, 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--granate);
+    text-align: center;
+    word-break: break-all;
+    margin-bottom: 14px;
+  }
+  .pc-btns {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .btn-pc-accion {
+    flex: 1;
+    background: var(--dorado);
+    color: #0f2027;
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 12px 8px;
+    font-family: 'Sora', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: transform 0.12s, background 0.2s;
+  }
+  .btn-pc-accion:active { transform: scale(0.97); }
+  .btn-pc-accion.copiado { background: var(--verde); color: white; }
+  .pc-nota {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: var(--texto-suave);
+    line-height: 1.4;
+  }
+  .pc-proximamente {
+    background: linear-gradient(135deg, #fff8e1, #fff3c4);
+    border: 1px solid #fcd34d;
+    border-radius: var(--radius-sm);
+    padding: 18px;
+    margin-bottom: 18px;
+  }
+  .pc-prox-titulo {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    color: #92400e;
+    margin-bottom: 6px;
+  }
+  .pc-proximamente p {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #78350f;
+    margin-bottom: 8px;
+  }
+  .pc-prox-lista {
+    list-style: none;
+    padding: 0;
+  }
+  .pc-prox-lista li {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #78350f;
+    line-height: 1.6;
+    padding: 4px 0;
+  }
+  .pc-prox-lista strong { color: #92400e; }
 
   /* ════ MODO JUEGO ════ */
   #modoOverlay {
@@ -1702,6 +1823,7 @@
   <button id="btnReiniciar" style="display:none" onclick="intentarVolverInicio()">⟵ Inicio</button>
   <div id="headerBtns">
     <button id="btnDonar" onclick="abrirDonar()" aria-label="Apoya el proyecto">❤️</button>
+    <button id="btnPC" onclick="abrirVersionPC()" aria-label="Aprendalia en tu ordenador">💻</button>
     <button id="btnAjustes" onclick="abrirAjustes()" aria-label="Ajustes">⚙️</button>
   </div>
 </div>
@@ -1720,7 +1842,7 @@
   </div>
 
   <div id="limitNote" class="limit-note" style="display:none">
-    Has alcanzado el máximo de 2 tests. Borra uno para añadir otro, o pásate a la versión completa.
+    Has alcanzado el máximo de tests gratuitos. Borra uno para añadir otro.
   </div>
 
   <div id="testList"></div>
@@ -1828,7 +1950,38 @@
     <div class="ajuste-badge">Próximamente</div>
   </div>
 
-  <div class="ajuste-version">Aprendalia · versión 2.0</div>
+  <div class="ajuste-version">Aprendalia · versión 2.0<br><span style="font-size:11px;opacity:0.7">compilado: 2026-07-07 20:40 · atrás-fix</span></div>
+
+  <button class="btn-home" onclick="goHome()">⟵ Volver al inicio</button>
+</div>
+
+<!-- ══ PANTALLA: APRENDALIA EN TU ORDENADOR ══ -->
+<div class="screen" id="screenPC">
+  <div class="pc-hero">
+    <div class="pc-hero-icon">💻</div>
+    <h2>Aprendalia en tu ordenador</h2>
+    <p>La misma app, sin instalar nada, desde cualquier navegador.</p>
+  </div>
+
+  <div class="pc-card">
+    <p class="pc-card-txt">Aprendalia también funciona desde el navegador de tu PC. Entra en esta dirección:</p>
+    <div class="pc-link" id="pcLink">aprendalia.es</div>
+    <div class="pc-btns">
+      <button class="btn-pc-accion" onclick="copiarEnlacePC()" id="btnCopiarPC">📋 Copiar enlace</button>
+      <button class="btn-pc-accion" onclick="compartirEnlacePC()">📤 Compartir</button>
+    </div>
+    <p class="pc-nota">💡 Cópialo o compártelo contigo mismo (WhatsApp, correo…) para abrirlo fácilmente en tu ordenador.</p>
+  </div>
+
+  <div class="pc-proximamente">
+    <div class="pc-prox-titulo">🚀 Esto es solo el principio</div>
+    <p>Estamos preparando una web con:</p>
+    <ul class="pc-prox-lista">
+      <li>👥 Una <strong>comunidad</strong> donde crear y compartir tests con otros usuarios</li>
+      <li>🎬 <strong>Vídeos paso a paso</strong> para crear tus tests con IA</li>
+      <li>Y más opciones en camino</li>
+    </ul>
+  </div>
 
   <button class="btn-home" onclick="goHome()">⟵ Volver al inicio</button>
 </div>
@@ -2092,8 +2245,8 @@ function showScreen(id) {
   pantallaActual = id;
   window.scrollTo(0, 0);
   // Botones del header según la pantalla:
-  // En el inicio → icono de ajustes visible, "Inicio" oculto.
-  // En cualquier otra → "Inicio" visible, ajustes oculto.
+  // En el inicio → corazón + ajustes visibles, "Inicio" oculto.
+  // En cualquier otra → "Inicio" visible, corazón + ajustes ocultos.
   const enInicio = (id === 'screenHome');
   document.getElementById('headerBtns').style.display = enInicio ? 'flex' : 'none';
   document.getElementById('btnReiniciar').style.display = enInicio ? 'none' : 'block';
@@ -2111,7 +2264,37 @@ function abrirAjustes() {
   showScreen('screenAjustes');
 }
 
+// ── Aprendalia en tu ordenador ──
+const URL_PC = 'https://aprendalia.es';
+function abrirVersionPC() {
+  showScreen('screenPC');
+}
+function copiarEnlacePC() {
+  const btn = document.getElementById('btnCopiarPC');
+  const done = () => {
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copiado');
+    setTimeout(() => { btn.textContent = '📋 Copiar enlace'; btn.classList.remove('copiado'); }, 2200);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(URL_PC).then(done).catch(() => fallbackCopia(URL_PC, done));
+  } else {
+    fallbackCopia(URL_PC, done);
+  }
+}
+function compartirEnlacePC() {
+  const texto = 'Aprendalia también funciona en el ordenador. Entra aquí: ' + URL_PC;
+  if (navigator.share) {
+    navigator.share({ title: 'Aprendalia', text: texto, url: URL_PC }).catch(() => {});
+  } else {
+    // Sin API de compartir nativa disponible: copiamos como alternativa
+    fallbackCopia(texto, () => showToast('Enlace copiado. Pégalo donde quieras enviarlo.', null));
+  }
+}
+
 // ── Apoya el proyecto ──
+// Cuando exista el enlace real (Ko-fi, Bizum, PayPal.me...), se pone aquí
+// y se cambia la función para abrirlo con window.open(URL_DONAR, '_blank').
 const URL_DONAR = null;  // ← cuando lo tengas, pon aquí la URL entre comillas
 function abrirDonar() {
   if (URL_DONAR) {
@@ -2174,6 +2357,7 @@ function renderLibrary() {
   if (library.length >= MAX_TESTS) {
     addCard.classList.add('disabled');
     addCard.onclick = function() { showToast('Has alcanzado el máximo de ' + MAX_TESTS + ' tests. Borra uno para añadir otro.', 'err'); };
+    limitNote.textContent = 'Has alcanzado el máximo de ' + MAX_TESTS + ' tests gratuitos. Borra uno para añadir otro.';
     limitNote.style.display = 'block';
   } else {
     addCard.classList.remove('disabled');
@@ -2396,6 +2580,8 @@ function descargarTestJSON(id) {
   const test = getTest(id);
   if (!test) { showToast('Test no encontrado.', 'err'); return; }
 
+  // Reconstruimos el JSON en el mismo formato que la app espera al importar,
+  // para que este archivo se pueda volver a subir sin ningún problema.
   const exportable = {
     titulo: test.titulo,
     preguntas: test.preguntas.map(p => ({
@@ -2410,7 +2596,7 @@ function descargarTestJSON(id) {
   const contenido = JSON.stringify(exportable, null, 2);
   const nombreArchivo = (test.titulo || 'test')
     .toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')  // sin acentos
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '') || 'test';
 
@@ -2453,6 +2639,16 @@ function confirmarAccion() {
     pendingAction = null;
     cerrarModal();
     goHome();
+    return;
+  } else if (pendingAction.tipo === 'cerrarApp') {
+    pendingAction = null;
+    cerrarModal();
+    salidaConfirmada = true;     // el gestor del atrás dejará pasar sin re-anclar
+    try { window.close(); } catch (e) {}
+    // Deshacer nuestras entradas de historial: si el entorno (app instalada)
+    // cierra al agotarse el historial, se cerrará; en un navegador normal,
+    // quedará lista para cerrarse con el siguiente atrás.
+    try { history.go(-2); } catch (e) {}
     return;
   }
   pendingAction = null;
@@ -3054,6 +3250,12 @@ function pedirCerrarApp() {
 // ════════════════════════════════════════════════
 //  ARRANQUE
 // ════════════════════════════════════════════════
+// Registrar el service worker (modo offline de la PWA)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  });
+}
 // Entrada de guardia en el historial: el primer "atrás" nunca cierra la app
 try { history.pushState({ screen: 'guardia' }, ''); } catch (e) {}
 sembrarEjemploSiProcede();
