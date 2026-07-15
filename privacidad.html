@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política de privacidad · Aprendalia</title>
+<meta name="theme-color" content="#0f3d4c">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --granate: #0f3d4c;
+    --granate-dark: #0a2b36;
+    --granate-light: #e6f4f1;
+    --dorado: #3dd7b8;
+    --dorado-dark: #14b8a6;
+    --fondo: #f6f9fb;
+    --carta: #ffffff;
+    --texto: #0f2027;
+    --texto-suave: #5a7580;
+    --borde: #e3edf1;
+    --radius: 18px;
+    --shadow: 0 4px 16px rgba(15,61,76,0.06);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+    line-height: 1.65;
+  }
+  header {
+    background: linear-gradient(135deg, var(--granate-dark) 0%, var(--granate) 100%);
+    color: white;
+    padding: 40px 20px 34px;
+    text-align: center;
+  }
+  header .icono { font-size: 40px; margin-bottom: 8px; }
+  header h1 {
+    font-family: 'Sora', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+  }
+  header p {
+    margin-top: 6px;
+    font-size: 14px;
+    opacity: 0.85;
+  }
+  main {
+    max-width: 640px;
+    margin: -20px auto 40px;
+    padding: 0 16px;
+  }
+  .card {
+    background: var(--carta);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px 24px;
+    margin-bottom: 16px;
+  }
+  .card.destacado {
+    background: var(--granate-light);
+    border: 1px solid #b9e4dc;
+  }
+  .card.destacado p { color: var(--granate); font-weight: 600; }
+  h2 {
+    font-family: 'Sora', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--granate);
+    margin-bottom: 10px;
+    margin-top: 4px;
+  }
+  p { font-size: 15px; color: var(--texto); margin-bottom: 8px; }
+  p.fecha {
+    text-align: center;
+    color: var(--texto-suave);
+    font-size: 13px;
+    margin: 18px 0 0;
+  }
+  a { color: var(--dorado-dark); font-weight: 600; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .contacto {
+    display: inline-block;
+    margin-top: 6px;
+    background: var(--granate);
+    color: white !important;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  footer {
+    text-align: center;
+    color: var(--texto-suave);
+    font-size: 12px;
+    padding: 20px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="icono">📚</div>
+  <h1>Política de privacidad</h1>
+  <p>Aprendalia</p>
+</header>
+
+<main>
+
+  <div class="card destacado">
+    <p>🔒 Aprendalia no recopila, almacena en servidores externos, ni comparte ningún dato personal de sus usuarios. Todo se queda en tu propio dispositivo.</p>
+  </div>
+
+  <div class="card">
+    <h2>Qué datos recopila esta aplicación</h2>
+    <p>Aprendalia es una aplicación de estudio que permite crear y realizar tests a partir de contenido generado por el propio usuario.</p>
+    <p>Toda la información que generas al usar la app —tus tests, tus respuestas, tu progreso de repaso y tus estadísticas— se guarda <strong>únicamente en el almacenamiento local de tu propio dispositivo</strong>. Esta información nunca se envía a ningún servidor, ni a los creadores de la aplicación, ni a terceros.</p>
+  </div>
+
+  <div class="card">
+    <h2>Uso de servicios de terceros</h2>
+    <p>Aprendalia no integra servicios de análisis, publicidad ni seguimiento de terceros.</p>
+    <p>La app puede sugerir el uso de servicios externos de inteligencia artificial (como ChatGPT, Gemini o Claude) para ayudarte a generar el contenido de tus tests. El uso de dichos servicios está sujeto a sus propias políticas de privacidad, ajenas a Aprendalia.</p>
+  </div>
+
+  <div class="card">
+    <h2>Permisos de la aplicación</h2>
+    <p>Aprendalia no solicita permisos especiales del dispositivo (como acceso a la cámara, ubicación, contactos o micrófono).</p>
+  </div>
+
+  <div class="card">
+    <h2>Eliminación de datos</h2>
+    <p>Como todos los datos se almacenan localmente, puedes eliminarlos en cualquier momento borrando los tests desde la propia aplicación, o desinstalando la aplicación de tu dispositivo.</p>
+  </div>
+
+  <div class="card">
+    <h2>Cambios en esta política</h2>
+    <p>Si esta política cambia en el futuro, se actualizará esta misma página con la fecha de la nueva revisión.</p>
+  </div>
+
+  <div class="card">
+    <h2>Contacto</h2>
+    <p>Si tienes cualquier duda sobre esta política de privacidad, puedes escribirnos:</p>
+    <a class="contacto" href="mailto:aprendalia.app@gmail.com">✉️ aprendalia.app@gmail.com</a>
+  </div>
+
+  <p class="fecha">Última actualización: julio de 2026</p>
+
+</main>
+
+<footer>Aprendalia © 2026</footer>
+
+</body>
+</html>
