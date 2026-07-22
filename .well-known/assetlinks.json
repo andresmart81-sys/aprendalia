@@ -1,8 +1,11 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "com.aprendalia.app",
-        "sha256_cert_fingerprints": ["39:B8:B0:7D:E3:F2:FE:02:56:E2:2C:A8:12:28:20:E4:AB:F4:12:4D:AD:D2:01:A0:2E:C6:5C:2E:28:73:3B:FD"]
-      }
-    }]
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.aprendalia.app",
+      "sha256_cert_fingerprints":
+        ["20:33:ED:23:E9:B9:F1:8A:01:84:19:D9:47:C1:3F:72:73:F5:3A:62:41:EC:ED:B1:52:2C:5C:84:81:A5:B2:FF"]
+    }
+  }
+]
